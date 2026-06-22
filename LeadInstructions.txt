@@ -1,3 +1,57 @@
-Please add billing logic here
-- Use Account object
-- Validate City field
+=====================================
+TEAM LEAD INSTRUCTIONS
+=====================================
+
+Task: Account Billing City Validation
+
+Requirement:
+- Add validation on Account Billing City field
+- City must be at least 3 characters long
+- City cannot contain special characters
+
+Acceptance Criteria:
+1. When user enters city less than 3 chars → Show error
+2. When user enters special characters → Show error
+3. When city is valid → Save successfully
+
+Code Template:
+=====================================
+
+trigger AccountBillingValidation on Account (before insert, before update) {
+    
+    for(Account acc : Trigger.new) {
+        if(acc.BillingCity != null) {
+            // Add validation logic here
+            // Check length and special characters
+        }
+    }
+}
+
+=====================================
+Team Lead: John Doe
+Date: June 22, 2026
+Priority: High
+=====================================
+
+// Developer Implementation:
+// Added billing validation logic
+
+trigger AccountBillingValidation on Account (before insert, before update) {
+    
+    for(Account acc : Trigger.new) {
+        if(acc.BillingCity != null) {
+            String city = acc.BillingCity;
+            
+            // Check length
+            if(city.length() < 3) {
+                acc.addError('City must be at least 3 characters long');
+            }
+            
+            // Check special characters
+            Pattern specialCharPattern = Pattern.compile('[^a-zA-Z0-9 ]');
+            if(specialCharPattern.matcher(city).find()) {
+                acc.addError('City cannot contain special characters');
+            }
+        }
+    }
+}
